@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!-- 使用注解 -->
+    <context:annotation-config />
+    <context:component-scan base-package="me.daisenho.spring.rmi.demo.**" />
+
+    <mvc:annotation-driven />
+    <mvc:default-servlet-handler />
+
+    <!-- local service -->
+    <bean id="testRMIService" class="me.daisenho.spring.rmi.demo.common.service.TestRMIServiceImpl"></bean>
+
+    <!-- hessian -->
+    <bean name="/testRMIService"
+        class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="testRMIService"></property>
+        <property name="serviceInterface" value="me.daisenho.spring.rmi.demo.common.service.TestRMIService"></property>
+    </bean>
+    
+</beans>
